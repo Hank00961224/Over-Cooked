@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>時尚穿搭推薦</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --bg1: #2a1810;
+            --bg2: #1f140d;
+            --card: rgba(255, 236, 224, 0.05);
+            --accent1: #ff6b4a;
+            --accent2: #ffa149;
+            --text: #fff5ed;
+            --muted: rgba(255, 236, 224, 0.75);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans TC', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg1), var(--bg2));
+            color: var(--text);
+            padding: 28px;
+            display: flex;
+            align-items: start;
+            justify-content: center;
+        }
+
+        .container {
+            width: 1180px;
+            max-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+        }
+
+        .panel {
+            background: linear-gradient(145deg, rgba(255, 150, 50, 0.05), rgba(255, 107, 74, 0.02));
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 236, 224, 0.08);
+        }
+
+        .title {
+            font-size: 24px;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        /* 結果卡片樣式 */
+        .result-card {
+            background: linear-gradient(145deg, rgba(255, 150, 50, 0.08), rgba(255, 107, 74, 0.05));
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 236, 224, 0.1);
+        }
+
+        /* 穿搭預覽區域 */
+        .outfit-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .outfit-item {
+            background: rgba(255, 236, 224, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 236, 224, 0.08);
+        }
+
+        .outfit-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .outfit-item .name {
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .outfit-item .desc {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* 穿搭示意圖 */
+        .outfit-guide {
+            margin-top: 20px;
+            background: linear-gradient(145deg, rgba(255, 150, 50, 0.08), rgba(255, 107, 74, 0.05));
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .guide-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .guide-title .material-icons {
+            font-size: 20px;
+        }
+
+        .layers-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .layer {
+            flex: 1;
+            text-align: center;
+            background: rgba(255, 236, 224, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 236, 224, 0.08);
+        }
+
+        .layer img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .layer .layer-name {
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .layer .layer-desc {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* 搜尋表單樣式 */
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input, .select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 236, 224, 0.05);
+            border: 1px solid rgba(255, 236, 224, 0.1);
+            border-radius: 8px;
+            color: var(--text);
+        }
+
+        .input:focus, .select:focus {
+            outline: none;
+            border-color: var(--accent1);
+            box-shadow: 0 0 0 2px rgba(255, 107, 74, 0.2);
+        }
+
+        /* 按鈕樣式 */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+        }
+
+        .btn.secondary {
+            background: rgba(255, 236, 224, 0.1);
+            color: var(--text);
+            border: 1px solid rgba(255, 236, 224, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 980px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .outfit-preview {
+                grid-template-columns: 1fr;
+            }
+            
+            .layers-container {
+                flex-direction: column;
+            }
+            
+            .layer {
+                max-width: 200px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左側結果面板 -->
+        <div class="panel">
+            <h1 class="title">今日穿搭推薦</h1>
+            <p class="subtitle">根據您的個人特徵與當地天氣，為您推薦最適合的穿搭組合。</p>
+
+            <div class="result-card">
+                <div id="outfitResult">
+                    <!-- 動態生成穿搭預覽 -->
+                </div>
+
+                <!-- 天氣顯示區 -->
+                <div id="weatherInfo" style="margin-top:12px;color:var(--muted);font-size:14px">
+                    <!-- 天氣資訊會顯示在這裡 -->
+                </div>
+
+                <div class="outfit-guide">
+                    <div class="guide-title">
+                        <span class="material-icons">style</span>
+                        <h3>穿搭分層指南</h3>
+                    </div>
+                    <div class="layers-container">
+                        <div class="layer">
+                            <img src="images/layer-outer.png" alt="外層">
+                            <div class="layer-name">外層</div>
+                            <div class="layer-desc">保暖、防風</div>
+                        </div>
+                        <div class="layer">
+                            <img src="images/layer-middle.png" alt="中層">
+                            <div class="layer-name">中層</div>
+                            <div class="layer-desc">造型、保暖</div>
+                        </div>
+                        <div class="layer">
+                            <img src="images/layer-base.png" alt="基礎層">
+                            <div class="layer-name">基礎層</div>
+                            <div class="layer-desc">舒適、透氣</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右側設定面板 -->
+        <div class="panel">
+            <h2 class="title">搭配條件設定</h2>
+            <p class="subtitle">請填寫以下資訊，讓我們為您推薦最適合的穿搭。</p>
+
+            <form class="search-form" id="outfitForm">
+                <div class="form-group">
+                    <label>性別</label>
+                    <select class="select" name="gender" required>
+                        <option value="male">男裝</option>
+                        <option value="female">女裝</option>
+                        <option value="unisex">中性風格</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>風格偏好（用文字描述）</label>
+                    <input type="text" class="input" name="style" placeholder="用一句話描述您的風格，例如：簡約、復古或運動風" required>
+                </div>
+
+                <div class="form-group">
+                    <label>身高 (cm)</label>
+                    <input type="number" class="input" name="height" placeholder="請輸入身高" required>
+                </div>
+
+                <div class="form-group">
+                    <label>體重 (kg)</label>
+                    <input type="number" class="input" name="weight" placeholder="請輸入體重" required>
+                </div>
+
+                <div class="form-group">
+                    <label>所在地區</label>
+                    <input type="text" class="input" name="location" placeholder="輸入城市名稱" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn primary">生成穿搭建議</button>
+                    <button type="reset" class="btn secondary">重新設定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 表單提交處理 + 取得天氣
+        document.getElementById('outfitForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // 收集表單資料
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // 先嘗試取得地區天氣，再生成穿搭
+            const weatherTarget = document.getElementById('weatherInfo');
+            weatherTarget.textContent = '正在查詢天氣...';
+            try {
+                const weather = await fetchWeather(data.location);
+                weatherTarget.innerHTML = `<strong>天氣（${weather.name.split(',')[0]}）</strong>：溫度 ${weather.temperature}°C，濕度 ${weather.humidity !== null ? weather.humidity + '%' : '—'}`;
+            } catch (err) {
+                weatherTarget.textContent = '無法取得天氣資料';
+                console.warn(err);
+            }
+
+            // 生成穿搭建議
+            generateOutfit(data);
+        });
+
+        // 生成穿搭建議
+        function generateOutfit(data) {
+            // 根據性別和風格選擇適當的穿搭項目（支援文字描述）
+            const outfits = getOutfitsByStyle(data.style || '', data.gender);
+            
+            // 更新結果區域
+            document.getElementById('outfitResult').innerHTML = `
+                <div class="outfit-preview">
+                    ${outfits.map(item => `
+                        <div class="outfit-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="name">${item.name}</div>
+                            <div class="desc">${item.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // 更新穿搭指南（若可對應已知風格，帶入對應示意圖）
+            updateLayerGuide(data.style || '');
+        }
+
+        // 根據風格獲取穿搭項目
+        function getOutfitsByStyle(style, gender) {
+            // 若使用者輸入的為自由文字，嘗試用關鍵字對應預設風格
+            const s = (style || '').toLowerCase();
+            let key = 'casual';
+            if (s.includes('正式') || s.includes('formal') || s.includes('商務')) key = 'formal';
+            else if (s.includes('街') || s.includes('street') || s.includes('潮')) key = 'street';
+            else if (s.includes('簡約') || s.includes('minimal') || s.includes('極簡')) key = 'minimalist';
+            else if (s.includes('運動') || s.includes('sports')) key = 'sport';
+
+            const outfits = {
+                casual: [
+                    { image: 'images/casual-top.jpg', name: '休閒上衣', description: '舒適純棉T恤' },
+                    { image: 'images/casual-bottom.jpg', name: '休閒褲', description: '直筒牛仔褲' },
+                    { image: 'images/casual-shoes.jpg', name: '休閒鞋', description: '百搭運動鞋' }
+                ],
+                formal: [
+                    { image: 'images/formal-top.jpg', name: '襯衫', description: '修身襯衫' },
+                    { image: 'images/formal-bottom.jpg', name: '西褲', description: '合身西褲' },
+                    { image: 'images/formal-shoes.jpg', name: '皮鞋', description: '經典皮鞋' }
+                ],
+                street: [
+                    { image: 'images/street-top.jpg', name: '街頭上衣', description: '寬版印花上衣' },
+                    { image: 'images/street-bottom.jpg', name: '寬褲', description: '寬鬆褲款' },
+                    { image: 'images/street-shoes.jpg', name: '球鞋', description: '潮流球鞋' }
+                ],
+                minimalist: [
+                    { image: 'images/minimal-top.jpg', name: '極簡上衣', description: '乾淨俐落線條' },
+                    { image: 'images/minimal-bottom.jpg', name: '簡約褲', description: '素色合身褲' },
+                    { image: 'images/minimal-shoes.jpg', name: '低調鞋款', description: '素色百搭鞋' }
+                ],
+                sport: [
+                    { image: 'images/sport-top.jpg', name: '運動上衣', description: '透氣運動衣' },
+                    { image: 'images/sport-bottom.jpg', name: '運動褲', description: '舒適彈性褲' },
+                    { image: 'images/sport-shoes.jpg', name: '運動鞋', description: '支撐型跑鞋' }
+                ]
+            };
+
+            return outfits[key] || outfits.casual;
+        }
+
+        // 更新穿搭指南
+         function updateLayerGuide(style) {
+            // 嘗試根據 style 關鍵字載入對應示意圖檔名，若無則使用預設 casual
+            const s = (style || '').toLowerCase();
+            let key = 'casual';
+            if (s.includes('正式') || s.includes('formal')) key = 'formal';
+            else if (s.includes('街') || s.includes('street')) key = 'street';
+            else if (s.includes('簡約') || s.includes('minimal')) key = 'minimal';
+
+            const layers = document.querySelectorAll('.layer img');
+            if (layers && layers.length >= 3) {
+                layers[0].src = `images/layer-${key}-outer.png`;
+                layers[1].src = `images/layer-${key}-middle.png`;
+                layers[2].src = `images/layer-${key}-base.png`;
+            }
+         }
+
+        // 使用 Nominatim (OpenStreetMap) 做地理編碼，然後呼叫 Open-Meteo 取得溫度與濕度
+        async function fetchWeather(location) {
+            if (!location) throw new Error('no location');
+            const q = encodeURIComponent(location);
+            const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${q}&limit=1`;
+            const geoRes = await fetch(geocodeUrl);
+            const geoJson = await geoRes.json();
+            if (!geoJson || !geoJson[0]) throw new Error('location not found');
+            const lat = geoJson[0].lat;
+            const lon = geoJson[0].lon;
+            const displayName = geoJson[0].display_name || location;
+
+            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=relativehumidity_2m&current_weather=true&timezone=auto`;
+            const wRes = await fetch(weatherUrl);
+            const wJson = await wRes.json();
+            const temp = wJson.current_weather && wJson.current_weather.temperature !== undefined ? wJson.current_weather.temperature : null;
+
+            // 從 hourly 找出最接近現在時間的濕度值（若存在）
+            let humidity = null;
+            if (wJson.hourly && Array.isArray(wJson.hourly.time) && Array.isArray(wJson.hourly.relativehumidity_2m)) {
+                const times = wJson.hourly.time.map(t => new Date(t).getTime());
+                const now = Date.now();
+                let idx = 0, minDiff = Infinity;
+                times.forEach((ms, i) => {
+                    const d = Math.abs(ms - now);
+                    if (d < minDiff) { minDiff = d; idx = i; }
+                });
+                humidity = wJson.hourly.relativehumidity_2m[idx];
+            }
+
+            return {
+                temperature: temp !== null ? Number(temp).toFixed(1) : '—',
+                humidity: humidity !== null ? Math.round(humidity) : null,
+                name: displayName
+            };
+        }
+    </script>
+</body>
+</html>

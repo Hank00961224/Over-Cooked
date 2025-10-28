@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Style Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .split-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .split-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .virtual-fitting {
+            background: url('images/virtual-fitting.jpg') center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .outfit-recommend {
+            background: url('images/streetwear-kids.jpg') center;
+            background-size: cover;
+            background-position: center;
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        .split-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(0, 0, 0, 0.6) 100%
+            );
+            transition: all 0.4s ease;
+        }
+
+        .split-section:hover::before {
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.2) 0%,
+                rgba(0, 0, 0, 0.4) 100%
+            );
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 46px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .split-button {
+            display: inline-block;
+            padding: 18px 48px;
+            font-size: 20px;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 2px;
+            backdrop-filter: blur(5px);
+        }
+
+        .split-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+            }
+            
+            .split-section {
+                height: 50vh;
+            }
+            
+            .section-title {
+                font-size: 32px;
+                margin-bottom: 15px;
+            }
+            
+            .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 25px;
+            }
+            
+            .split-button {
+                padding: 15px 35px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="split-container">
+        <section class="split-section virtual-fitting">
+            <div class="content-wrapper">
+                <h2 class="section-title">虛擬試衣間</h2>
+                <p class="section-subtitle">探索個人專屬造型，打造獨特時尚風格</p>
+                <a href="https://chatgpt.com/share/68ff1595-b0e0-8006-9f11-36112e3200ae" class="split-button" target="_blank" rel="noopener noreferrer">開始體驗</a>
+            </div>
+        </section>
+        <section class="split-section outfit-recommend">
+            <div class="content-wrapper">
+                <h2 class="section-title">穿搭推薦</h2>
+                <p class="section-subtitle">發掘專業造型搭配，展現自信魅力</p>
+                <a href="recommend.html" class="split-button">尋找靈感</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
