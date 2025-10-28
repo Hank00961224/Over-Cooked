@@ -3,7 +3,7 @@
     margin: 0;
 }
 header {
-    background-color: rgb(10, 124, 90);
+    background-color: #1D4ED8;
     height: 80px;
     width: 100%;
 }
@@ -33,37 +33,28 @@ header a:hover {
 }
 .subtitle {
     background-color: rgb(248, 205, 124);
-    color: white;
-    height:70vh;
-    background-image: url(images/試衣服.jpg);
+    color: #111;
+    height:90vh;
+    background-image: url(images/網站圖片1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    padding: 25px;
 }
 .subtitle h2 {
     font-size: 60px;
 }
 .subtitle h3 {
-    color: white;
     font-size: 30px;
     margin: 12px 0 20px;
 }
-.subtitle a {
-    color:white;
-    font-size: 20px;
-    text-decoration: none;
-    background-color: #73a7d8;
-    border: 2px solid #ACACAC;
-    padding: 10px 20px;
-    border-radius: 5px;
-}
 .substance {
-    background-color: rgb(48, 113, 73);
-    color: white;
+    background-color: #F9FAFB;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,8 +73,8 @@ em{
 }
 .guide {
     height: 30vh;
-    background-color: rgb(48, 113, 73);
-    color: white;
+    background-color: #F9FAFB;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,15 +99,15 @@ em{
 .word {
     font-size: 70px;
     width: 70%;
-    background-color: white;
+    background-color: #F9FAFB;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 .intro {
-    color: aliceblue;
-    background-color: rgb(48, 113, 73);
+    color: #333;
+    background-color: #F9FAFB;
     display: flex;
     flex-direction: column;
 }
@@ -139,8 +130,8 @@ em{
     color: #e4d31f;
 }
 .aboutus {
-    background-color: rgb(48, 113, 73);
-    color: white;
+    background-color: #F9FAFB;
+    color: #333;
     padding: 20px 20px;
 }
 .aboutus h2{
@@ -150,8 +141,8 @@ em{
     color: #e4d31f;
 }
 .why {
-    background-color: rgb(48, 113, 73);
-    color: white;
+    background-color: #F9FAFB;
+    color: #333;
     padding: 20px 20px;
 }
 body {
