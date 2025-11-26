@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap');
 *{
     padding: 0;
     margin: 0;
 }
 header {
-    background-color: #1D4ED8;
+    background-color: #63625cda;
     height: 80px;
     width: 100%;
 }
@@ -229,4 +230,27 @@ footer {
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.special-title {
+    /* 以 ZCOOL XiaoWei 為首選，確保中文字元（包含「會」）由此字體顯示 */
+    font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', 'Zhi Mang Xing', 'Noto Sans TC', 'PingFang TC', sans-serif;
+    font-weight: 400;
+    line-height: inherit;
+    color: inherit;
+    letter-spacing: 1px;
+    display: inline-block;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* 不改變字體大小，僅微調傾斜/效果（如需可取消） */
+    /* transform: skewX(-2deg); */
+}
+
+/* 確保 header 定位維持不變 */
+header h1.special-title {
+    position: absolute;
+    left: 60px;
+    top: 0;
+    line-height: 80px;
 }
