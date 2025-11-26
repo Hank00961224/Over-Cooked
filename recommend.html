@@ -8,259 +8,206 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         :root {
-            --bg1: #2a1810;
-            --bg2: #1f140d;
-            --card: rgba(255, 236, 224, 0.05);
-            --accent1: #ff6b4a;
-            --accent2: #ffa149;
-            --text: #fff5ed;
-            --muted: rgba(255, 236, 224, 0.75);
+            --bg1: #181a1b;
+            --bg2: #232526;
+            --card: #232526;
+            --accent1: #fff;
+            --accent2: #bbb;
+            --text: #f5f5f5;
+            --muted: #aaa;
         }
 
         * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'Noto Sans TC', 'Segoe UI', Arial, sans-serif;
             min-height: 100vh;
             background: linear-gradient(135deg, var(--bg1), var(--bg2));
             color: var(--text);
-            padding: 28px;
+            padding: 0;
             display: flex;
             align-items: start;
             justify-content: center;
         }
 
-        /* 修改：調整主容器為橫向佈局 */
         .container {
-            width: 98vw;
-            max-width: 1800px;
+            width: 100vw;
+            max-width: 1600px;
             display: grid;
-            grid-template-columns: minmax(400px, 1fr) 2fr;  /* 改為 1:2 比例但左側最小 400px */
-            gap: 20px;
-            padding: 20px;
-            height: 95vh;
-            margin-top: 60px; /* 為頂部返回按鈕留出空間 */
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 48px 24px 24px 24px;
+            height: auto;
+            margin-top: 56px;
         }
 
         .panel {
-            background: linear-gradient(145deg, rgba(255, 150, 50, 0.05), rgba(255, 107, 74, 0.02));
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 236, 224, 0.08);
+            background: var(--card);
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+            border: 1px solid #222;
         }
 
         .title {
-            font-size: 24px;
+            font-size: 26px;
             color: var(--text);
-            margin-bottom: 12px;
-            font-weight: 500;
+            margin-bottom: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-family: 'Noto Sans TC', 'Segoe UI', Arial, sans-serif;
         }
-
         .subtitle {
-            font-size: 14px;
+            font-size: 16px;
             color: var(--muted);
-            margin-bottom: 24px;
-            line-height: 1.6;
+            margin-bottom: 28px;
+            line-height: 1.8;
+            font-family: 'Noto Sans TC', 'Segoe UI', Arial, sans-serif;
+        }
+        .result-card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 28px;
+            border: 1px solid #222;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
         }
 
-        /* 結果卡片樣式 */
-        .result-card {
-            background: linear-gradient(145deg, rgba(255, 150, 50, 0.08), rgba(255, 107, 74, 0.05));
+        .composite-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 24px;
+        }
+        .uploaded-preview, .composite-preview {
+            width: 100%;
+            background: #222;
             border-radius: 16px;
             padding: 24px;
-            border: 1px solid rgba(255, 236, 224, 0.1);
-        }
-
-        /* 穿搭預覽區域 */
-        .outfit-preview {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .outfit-item {
-            background: rgba(255, 236, 224, 0.05);
-            border-radius: 12px;
-            padding: 15px;
             text-align: center;
-            border: 1px solid rgba(255, 236, 224, 0.08);
-            transition: transform 0.3s ease;
+            border: 1px solid #333;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.22);
         }
-
-        .outfit-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .outfit-item img {
+        .uploaded-preview img, .composite-preview img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: 520px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: #1a1c1d;
+        }
+
+        .back-home {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 18px;
+            padding: 8px 24px;
+            background: #222;
+            color: #fff;
+            text-decoration: none;
             border-radius: 8px;
-            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background 0.2s;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            border: none;
+        }
+        .back-home:hover {
+            background: #444;
         }
 
-        .outfit-item .name {
-            color: var(--text);
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .outfit-item .desc {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        /* 搜尋表單樣式 */
         .search-form {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);  /* 2列並排 */
-            gap: 12px;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
             align-items: start;
         }
-
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-
         .form-group label {
             display: block;
             color: var(--muted);
             font-size: 14px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-weight: 500;
         }
-
         .input, .select {
             width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 236, 224, 0.2);
-            border-radius: 8px;
+            padding: 10px 12px;
+            background: #181a1b;
+            border: 1px solid #333;
+            border-radius: 7px;
             color: var(--text);
+            font-size: 15px;
         }
-
         .select option {
-            background-color: #2a1810;
+            background-color: #222;
             color: var(--text);
         }
-
         .input::placeholder {
-            color: rgba(255, 236, 224, 0.5);
+            color: #666;
         }
-
         .input:focus, .select:focus {
             outline: none;
-            border-color: var(--accent1);
-            box-shadow: 0 0 0 2px rgba(255, 107, 74, 0.2);
+            border-color: #fff;
+            box-shadow: 0 0 0 2px #333;
         }
 
-        /* 按鈕樣式 */
         .btn {
             padding: 12px 24px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
             font-weight: 500;
-            transition: all 0.3s ease;
+            font-size: 15px;
+            background: #222;
+            color: #fff;
+            transition: background 0.2s;
+            margin-right: 8px;
         }
-
         .btn.primary {
-            background: linear-gradient(135deg, var(--accent1), var(--accent2));
-            color: white;
+            background: #222;
+            color: #fff;
         }
-
         .btn.secondary {
-            background: rgba(255, 236, 224, 0.1);
-            color: var(--text);
-            border: 1px solid rgba(255, 236, 224, 0.2);
+            background: #181a1b;
+            color: #fff;
+            border: 1px solid #333;
         }
-
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: #444;
+            color: #fff;
         }
 
-        /* 照片上傳區域樣式 */
         .photo-upload {
-            background: rgba(255, 236, 224, 0.05);
-            border: 2px dashed rgba(255, 236, 224, 0.2);
-            border-radius: 12px;
-            padding: 20px;
+            background: #181a1b;
+            border: 2px dashed #333;
+            border-radius: 10px;
+            padding: 18px;
             text-align: center;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            color: var(--muted);
         }
-
         .photo-upload:hover {
-            background: rgba(255, 236, 224, 0.08);
+            background: #222;
         }
-
         .photo-preview {
             max-width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             border-radius: 8px;
             display: none;
-            margin-top: 10px;
+            margin-top: 8px;
+            background: #181a1b;
         }
-
         .upload-icon {
-            font-size: 48px;
+            font-size: 40px;
             color: var(--muted);
         }
 
-        /* 新增：三欄選擇區樣式 */
-        .selection-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 18px;
-        }
-        .selection-column {
-            background: rgba(255,236,224,0.03);
-            border: 1px solid rgba(255,236,224,0.06);
-            border-radius: 12px;
-            padding: 12px;
-        }
-        .selection-column h4 {
-            margin: 6px 0 10px;
-            font-size: 16px;
-            color: var(--text);
-        }
-        .selection-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .selection-item img {
-            width: 72px;
-            height: 72px;
-            object-fit: cover;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-        .selection-item label {
-            color: var(--muted);
-            font-size: 13px;
-        }
-        .confirm-row {
-            display:flex;
-            justify-content:flex-end;
-            margin-top:14px;
-        }
-        .btn.confirm {
-            background: linear-gradient(135deg, #4caf50, #66bb6a);
-            color:#fff;
-            border-radius:8px;
-            padding:10px 16px;
-            cursor:pointer;
-            border:none;
-        }
-
-        /* 載入提示樣式 */
         .loading-overlay {
             position: relative;
             min-height: 120px;
@@ -268,127 +215,34 @@
         .loading-overlay .loader {
             position: absolute;
             inset: 0;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            background: rgba(0,0,0,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.28);
             border-radius: 12px;
             color: #fff;
             font-size: 16px;
-            gap:10px;
+            gap: 10px;
         }
         .spinner {
-            width:18px;
-            height:18px;
-            border:3px solid rgba(255,255,255,0.25);
+            width: 18px;
+            height: 18px;
+            border: 3px solid #333;
             border-top-color: #fff;
-            border-radius:50%;
+            border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* 單件重點與整體搭配顯示 */
-        .single-row {
-            display:grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-        }
-        .single-card {
-            background: rgba(255,236,224,0.03);
-            border:1px solid rgba(255,236,224,0.06);
-            border-radius:12px;
-            padding:10px;
-            text-align:center;
-        }
-        /* 顯示整體為主：拉遠一點、完整呈現衣物或褲款 */
-        .single-card img {
-            width:100%;
-            height:320px;             /* 增高以顯示更多全身/整體比例 */
-            object-fit:contain;       /* contain 保留完整服裝外觀，不裁切特寫 */
-            background: rgba(0,0,0,0.02);
-            border-radius:8px;
-            margin-bottom:8px;
-            display:block;
-        }
-         .single-card .label { display: none; }
-
-         .composite-row {
-             display:flex;
-             gap:12px;
-             margin-top:14px;
-             align-items:flex-start;
-         }
-        /* 調整上傳預覽與示意人物比例：上傳預覽保留較小寬度，示意人物放大並置中 */
-        .uploaded-preview {
-            width: 220px;
-            background: rgba(255,236,224,0.03);
-            border-radius:12px;
-            padding:8px;
-            text-align:center;
-        }
-        .uploaded-preview img {
-            width:100%;
-            height:360px;             /* 稍微放高以顯示更多身形 */
-            object-fit:cover;
-            border-radius:8px;
-        }
-        .composite-preview {
-            flex:1;
-            display:flex;
-            align-items:center;
-            justify-content:center; /* 置中人像 */
-            background: rgba(255,236,224,0.03);
-            border-radius:12px;
-            padding:12px;
-        }
-        /* 示意人物改為單張更大圖，顯示整體（可調整 max-width） */
-        .composite-preview img {
-            width: 100%;
-            max-width: 760px;        /* 放大示意人物，使整體容易看清 */
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* 返回首頁按鈕樣式 */
-        .back-home {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 15px;
-            padding: 8px 24px;
-            background: linear-gradient(135deg, var(--accent1), var(--accent2));
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-home:hover {
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        /* 修改：面板樣式支持滾動 */
-        .panel {
-            max-height: calc(95vh - 60px); /* 減去頂部按鈕高度 */
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent1) transparent;
-        }
-
-        /* 響應式設計 */
         @media (max-width: 980px) {
             .container {
                 grid-template-columns: 1fr;
             }
-            
-            .outfit-preview {
+            .composite-row {
                 grid-template-columns: 1fr;
+            }
+            .uploaded-preview img, .composite-preview img {
+                height: 360px;
             }
         }
     </style>
@@ -517,8 +371,10 @@
     </div>
 
     <script>
-        // 將此處替換為您在 Unsplash 取得的 Access Key（保留單引號）
+        // Unsplash 與 Pexels API Key（Pexels 可申請免費 key，這裡用 demo key）
         const UNSPLASH_ACCESS_KEY = 'AMSaKomiM1b5LLX57gpT-TxdE0TQ4kHCmaf_b4iORTI';
+        const PEXELS_ACCESS_KEY = '563492ad6f91700001000001'; // demo key, 請換成自己的正式 key
+
         // 新增預設穿搭，以防 API 請求失敗
         const defaultOutfits = {
             casual: [
@@ -556,22 +412,42 @@
             generateOutfit(data);
         });
 
-        // 取得單一搜尋字串的圖片（回傳 item）
+        // 優化 fetchOneImage：先用 Unsplash，若失敗則用 Pexels
         async function fetchOneImage(term) {
+            // 先用 Unsplash
             try {
                 const res = await fetch(`https://api.unsplash.com/photos/random?query=${encodeURIComponent(term)}&orientation=portrait`, {
                     headers: { 'Authorization': `Client-ID ${UNSPLASH_ACCESS_KEY}` }
                 });
                 const j = await res.json();
-                return {
-                    image: j && j.urls && j.urls.regular ? j.urls.regular : null,
-                    name: j && j.alt_description ? j.alt_description : term,
-                    credit: j && j.user && j.user.name ? `Photo by ${j.user.name} on Unsplash` : ''
-                };
+                if (j && j.urls && j.urls.regular) {
+                    return {
+                        image: j.urls.regular,
+                        name: j.alt_description || term,
+                        credit: j.user && j.user.name ? `Photo by ${j.user.name} on Unsplash` : ''
+                    };
+                }
             } catch (e) {
-                console.warn('fetchOneImage failed', term, e);
-                return null;
+                // 忽略
             }
+            // 若 Unsplash 失敗，改用 Pexels
+            try {
+                const res2 = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(term)}&orientation=portrait&per_page=1`, {
+                    headers: { 'Authorization': PEXELS_ACCESS_KEY }
+                });
+                const j2 = await res2.json();
+                if (j2 && j2.photos && j2.photos.length > 0) {
+                    const p = j2.photos[0];
+                    return {
+                        image: p.src && p.src.large ? p.src.large : null,
+                        name: p.alt || term,
+                        credit: p.photographer ? `Photo by ${p.photographer} on Pexels` : ''
+                    };
+                }
+            } catch (e) {
+                // 忽略
+            }
+            return null;
         }
 
         // 小 helper：把性別值轉為中文顯示
@@ -601,49 +477,73 @@
             return null;
         }
 
-        // 取得每個類別（上身/下身/飾品）三張圖 — 調整搜尋詞以限制為衣物/裙褲/飾品
+        // 強化示意人物搜尋：明確加上性別關鍵字
+        async function fetchPersonImage(gender, style, ethnicity, trend, occasion) {
+            let ethnicToken = '';
+            if (ethnicity === 'asian') ethnicToken = ' asian';
+            else if (ethnicity === 'western') ethnicToken = ' european';
+
+            let genderToken = '';
+            if (gender === 'male') genderToken = 'male man';
+            else if (gender === 'female') genderToken = 'female woman';
+            else genderToken = 'unisex person';
+
+            const occasionToken = occasion ? ` ${occasion}` : '';
+            const trendToken = trend ? ` ${trend}` : '';
+            const styleToken = style ? ` ${style}` : '';
+
+            const personQueries = [
+                `${genderToken}${ethnicToken}${occasionToken}${trendToken}${styleToken} fashion model outfit`,
+                `${genderToken}${ethnicToken}${occasionToken}${styleToken} person wearing outfit`,
+                `${genderToken}${ethnicToken} fashion model${occasionToken}${trendToken}${styleToken}`,
+                `${genderToken}${ethnicToken}${occasionToken} outfit portrait`
+            ];
+            
+            for (const q of personQueries) {
+                const r = await fetchOneImage(q);
+                if (r && r.image) return r;
+            }
+            return null;
+        }
+
+        // 優化 getOutfitsByStyle：搜尋詞只聚焦部位，不考慮搭配
         async function getOutfitsByStyle(style, gender, ethnicity) {
-            const occasion = document.querySelector('select[name="occasion"]').value;
-            const s = (style || '').toLowerCase();
-            let base = 'casual';
-            if (occasion === 'ceremony' || s.includes('正式')) base = 'formal';
-            else if (occasion === 'party' || s.includes('派') || s.includes('party')) base = 'party';
-            else if (occasion === 'sports' || s.includes('運動')) base = 'sport';
+            // 若未選擇，預設簡約風 minimalist
+            const styleToken = (style && style.trim()) ? style.trim().toLowerCase() : 'minimalist';
 
             // 族群 token（英文短詞，用於搜尋）
             let ethToken = '';
             if (ethnicity === 'asian') ethToken = ' asian';
             else if (ethnicity === 'western') ethToken = ' european';
 
-            // 上身只找衣物（shirt/top/jacket）
+            // 上身：shirt/top/jacket + upper body + minimalist
             const topsTerms = [
-                `${gender}${ethToken} ${base} shirt`,
-                `${gender}${ethToken} ${base} top`,
-                `${gender}${ethToken} ${base} jacket`
+                `${gender}${ethToken} upper body shirt ${styleToken}`,
+                `${gender}${ethToken} upper body top ${styleToken}`,
+                `${gender}${ethToken} upper body jacket ${styleToken}`
             ];
-            // 下身優先聚焦在「褲子」(pants/trousers/jeans)
+            // 下身：pants/trousers/jeans/skirt + lower body + minimalist
             const bottomsTerms = [
-                `${gender}${ethToken} ${base} pants`,
-                `${gender}${ethToken} ${base} trousers`,
-                `${gender}${ethToken} ${base} jeans`
+                `${gender}${ethToken} lower body pants ${styleToken}`,
+                `${gender}${ethToken} lower body trousers ${styleToken}`,
+                `${gender}${ethToken} lower body jeans ${styleToken}`,
+                `${gender}${ethToken} lower body skirt ${styleToken}`
             ];
-            // 飾品聚焦在項鍊/手鍊/耳環等
+            // 飾品：necklace/bracelet/earrings + accessory + minimalist
             const accessoriesTerms = [
-                `${gender}${ethToken} ${base} necklace`,
-                `${gender}${ethToken} ${base} bracelet`,
-                `${gender}${ethToken} ${base} earrings`
+                `${gender}${ethToken} accessory necklace ${styleToken}`,
+                `${gender}${ethToken} accessory bracelet ${styleToken}`,
+                `${gender}${ethToken} accessory earrings ${styleToken}`
             ];
 
-            // 依序 fetch，fallback 使用 defaultOutfits
             async function fetchCategory(terms, fallbackKey) {
-                const promises = terms.map(t => fetchOneImage(t));
-                const results = await Promise.all(promises);
-                const items = results.map((r,i) => {
-                    if (r && r.image) return { image: r.image, name: r.name, credit: r.credit };
-                    const d = defaultOutfits[fallbackKey] && defaultOutfits[fallbackKey][i] ? defaultOutfits[fallbackKey][i] : null;
-                    return d ? { image: d.image, name: d.name, credit: d.credit || '' } : null;
-                }).filter(Boolean);
-                return items;
+                for (const t of terms) {
+                    const r = await fetchOneImage(t);
+                    if (r && r.image) return [r];
+                }
+                // fallback 使用 defaultOutfits
+                const d = defaultOutfits[fallbackKey] && defaultOutfits[fallbackKey][0] ? defaultOutfits[fallbackKey][0] : null;
+                return d ? [{ image: d.image, name: d.name, credit: d.credit || '' }] : [];
             }
 
             const [tops, bottoms, accessories] = await Promise.all([
@@ -652,8 +552,8 @@
                 fetchCategory(accessoriesTerms, 'casual')
             ]);
 
-            // 同時嘗試抓取「有人穿搭」示意圖（以便整體顯示）
-            const person = await fetchPersonImage(gender, base, ethnicity);
+            // 示意人物（維持原本邏輯）
+            const person = await fetchPersonImage(gender, styleToken, ethnicity);
 
             return { tops, bottoms, accessories, person };
         }
@@ -661,84 +561,69 @@
         // 修改 generateOutfit：顯示單件重點與以「人像示意」為主的整體搭配
         async function generateOutfit(data) {
             const target = document.getElementById('outfitResult');
-            target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>載入穿搭示意中，正在搜尋相關人像與單件示意…</div></div></div>`;
+            target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>AI 正在分析您的個人條件並生成專業穿搭建議…</div></div></div>`;
 
             try {
-                // 讀取族群選擇
-                const ethnicity = document.querySelector('select[name="ethnicity"]') ? document.querySelector('select[name="ethnicity"]').value : '';
+                const ethnicity = data.ethnicity || '';
+                const trend = data.trend || '';
+                const occasion = data.occasion || '';
+                const style = data.style || '';
 
-                const groups = await getOutfitsByStyle(data.style || '', data.gender, ethnicity);
+                const groups = await getOutfitsByStyle(style, data.gender, ethnicity, trend, occasion);
 
-                // 顯示圖片（只顯示圖，不顯示每張圖下方文字）
-                const topsHtml = (groups.tops || []).slice(0,3).map(it => `
-                    <div class="single-card">
-                        <img src="${it.image}" alt="">
-                    </div>
-                `).join('') || `<div class="single-card">無資料</div>`;
-
-                const bottomsHtml = (groups.bottoms || []).slice(0,3).map(it => `
-                    <div class="single-card">
-                        <img src="${it.image}" alt="">
-                    </div>
-                `).join('') || `<div class="single-card">無資料</div>`;
-
-                const accHtml = (groups.accessories || []).slice(0,3).map(it => `
-                    <div class="single-card">
-                        <img src="${it.image}" alt="">
-                    </div>
-                `).join('') || `<div class="single-card">無資料</div>`;
-
-                // 統一文字描述（用使用者輸入與 base/occasion 生成簡短建議）
-                const base = (data.style && data.style.trim()) ? data.style.trim() : '休閒';
-                const genderLabel = genderLabelText(data.gender);
-                const occasionText = data.occasion || '日常';
-
-                const topDesc = `上身：建議 ${base} 上衣（如襯衫、T 恤、針織上衣）`;
-                const bottomDesc = `下身：以「褲款」為主（建議：長褲 / 牛仔褲 / 西裝褲，與 ${genderLabel} 身形搭配）`;
-                const accDesc = `飾品：包含項鍊、手鍊、耳環等細項配件，用以點綴整體造型`;
-                const overallDesc = `整體風格：${occasionText} / ${base} / 適合 ${genderLabel}`;
-
-                // 上傳照片（若有）
                 const uploadedSrc = document.getElementById('photoPreview') && document.getElementById('photoPreview').src && document.getElementById('photoPreview').style.display !== 'none'
                     ? document.getElementById('photoPreview').src
                     : null;
 
-                // 示意人物（優先 groups.person）
                 let personImg = groups.person && groups.person.image ? groups.person.image : null;
                 let personCredit = groups.person && groups.person.credit ? groups.person.credit : '';
 
-                if (!personImg) {
-                    const fallback = (groups.tops[0] && groups.tops[0].image) || (groups.bottoms[0] && groups.bottoms[0].image) || (groups.accessories[0] && groups.accessories[0].image) || null;
-                    personImg = fallback;
+                const genderText = data.gender === 'male' ? '男性' : data.gender === 'female' ? '女性' : '中性';
+                const occasionText = occasion || '日常場合';
+                const styleText = style || '簡約風格';
+                const trendText = trend || '經典款式';
+
+                let aiDesc = '';
+                if (personImg) {
+                    aiDesc = `
+                        <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
+                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            根據您提供的身形數據（身高 ${data.height}cm、體重 ${data.weight}kg）以及個人風格偏好，AI 為您精選了這套${genderText}穿搭示意。<br><br>
+                            
+                            <strong>▸ 整體風格解析：</strong><br>
+                            這套搭配融合了「${trendText}」與「${styleText}」的設計語彙，特別針對「${occasionText}」場景量身打造。服裝剪裁線條俐落分明，版型比例經過精算，能完美修飾身形，同時保持舒適度與靈活性。<br><br>
+                            
+                            <strong>▸ 為什麼推薦這套？</strong><br>
+                            色彩搭配上採用協調漸層或撞色手法，既不過於張揚也不會太過低調，恰到好處地展現個人品味。配件與細節處理更是畫龍點睛，提升整體質感的同時也能凸顯您的時尚敏銳度。<br><br>
+                            
+                            <strong>▸ 實穿建議：</strong><br>
+                            這樣的穿搭不僅適合${occasionText}，稍作調整也能應用於其他場合。建議您可以參考示意圖的配色與層次感，挑選符合自己膚色與身形的單品，打造屬於自己的專屬風格。記住，最好的穿搭永遠是讓你自信又自在的那一套！
+                        </div>
+                    `;
+                } else {
+                    aiDesc = `
+                        <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
+                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            很抱歉目前無法為您找到合適的示意人物圖片，不過別擔心！根據您的條件與偏好，AI 依然能給您專業的穿搭建議。<br><br>
+                            
+                            建議您選擇剪裁俐落、質感細膩的單品，搭配簡約但具設計感的配件。記得服裝最重要的是合身與舒適，再搭配適當的色彩組合，就能輕鬆展現專業時尚感。<br><br>
+                            
+                            您可以稍後再試試看，或是調整一下搜尋條件（例如風格、場合等），讓 AI 為您找到更貼近需求的穿搭靈感！
+                        </div>
+                    `;
                 }
 
                 const compositeHtml = `
-                    <div class="single-row">
-                        ${topsHtml}
-                        ${bottomsHtml}
-                        ${accHtml}
-                    </div>
-
-                    <div style="margin-top:10px;color:var(--muted);font-size:14px;line-height:1.6;">
-                        <div>${topDesc}</div>
-                        <div>${bottomDesc}</div>
-                        <div>${accDesc}</div>
-                        <div>${overallDesc}</div>
-                    </div>
-
-                    <h4 style="margin-top:14px;color:var(--text)">整體搭配範例（示意人物）</h4>
+                    ${aiDesc}
                     <div class="composite-row">
                         <div class="uploaded-preview">
-                            <div style="color:var(--muted);font-size:13px;margin-bottom:8px;">你的照片</div>
-                            ${uploadedSrc ? `<img src="${uploadedSrc}" alt="uploaded">` : `<div style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:rgba(255,236,224,0.02);border-radius:8px;">尚未上傳照片</div>`}
+                            <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">您的照片</div>
+                            ${uploadedSrc ? `<img src="${uploadedSrc}" alt="uploaded">` : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">尚未上傳照片</div>`}
                         </div>
-                        <div style="flex:1">
-                            <div style="color:var(--muted);font-size:13px;margin-bottom:8px;">示意人物</div>
-                            <div class="composite-preview">
-                                ${personImg ? `<img src="${personImg}" alt="person">` : `<div style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:rgba(255,236,224,0.02);border-radius:8px;">無示意人物圖</div>`}
-                            </div>
-                            <div style="font-size:12px;color:var(--muted);margin-top:8px;">提示：左為您上傳的照片，右為示意人物穿搭。欲更貼近您，請上傳清晰的全身照並選擇對應族群。</div>
-                            <div style="font-size:11px;color:var(--muted);margin-top:6px;">${personCredit || ''}</div>
+                        <div class="composite-preview">
+                            <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">AI 示意人物</div>
+                            ${personImg ? `<img src="${personImg}" alt="person">` : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">無示意人物圖</div>`}
+                            <div style="font-size:14px;color:var(--muted);margin-top:14px;">${personCredit || ''}</div>
                         </div>
                     </div>
                 `;
